@@ -17,9 +17,6 @@ app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
 })
 
-
-
-
 // start and listen on the express server
 app.listen(port, () => {
   console.log(`Express is listening on localhost: ${port}`)
