@@ -2,19 +2,19 @@
   "name": "Restaurant_lists",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "css-loader": "^6.4.0",
-    "mini-css-extract-plugin": "^2.4.2",
-    "node-sass": "^6.0.1",
-    "sass-loader": "^12.1.0",
-    "webpack": "^5.58.1",
-    "webpack-cli": "^4.9.0"
-  }
+  "license": "ISC"
 }
