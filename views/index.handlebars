@@ -11,7 +11,7 @@
             class='form-control'
             placeholder='輸入餐廳、分類'
             aria-label='Restaurant Name...'
-            value=''
+            value='{{keyword}}'
             aria-describedby='search-button'
           />
           <div class='input-group-append'>
@@ -22,6 +22,12 @@
         </div>
       </form>
     </div>
+    <div class='errorMsg'>
+      {{#if showErrorMsg}}
+        <p class='text-danger my-2'>沒有符合關鍵字 「{{keyword}}」
+          的餐廳，換個關鍵字再試試看吧！</p>
+      {{/if}}
+    </div>
   </div>
 </div>
 
@@ -31,24 +37,22 @@
     <div class='col-md-10 col-12 mx-auto'>
       <div class='card-columns'>
 
-        {{! restaurants will be displayed here }}
+        <!-- Restaurants will be shown here -->
         {{#each restaurants}}
 
-          <a href='/restaurants/1' class='text-secondary'>
+          <a href='/restaurants/{{this.id}}' class='text-secondary'>
             <div class='card mb-3'>
               <img
                 class='card-img-top'
-                src={{this.image}}
-                alt='{{this.name}}
+                src='{{this.image}}'
+                alt='{{this.name}}'
               />
               <div class='card-body p-3'>
                 <h6 class='card-title mb-1'>{{this.name}}</h6>
-
                 <div class='restaurant-category mb-1'>
                   <i class='fas fa-utensils pr-2'></i>
                   {{this.category}}
                 </div>
-
                 <span class='badge badge-pill badge-danger font-weight-normal'>
                   {{this.rating}}
                   <i class='fas fa-star fa-xs'></i>
@@ -56,7 +60,9 @@
               </div>
             </div>
           </a>
+
         {{/each}}
+
       </div>
     </div>
   </div>

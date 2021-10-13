@@ -1,11 +1,10 @@
 const express = require('express')
 const app = express()
+const port = 3000
 const exphbs = require('express-handlebars')
 const restaurantList = require('./restaurant.json')
-const port = 3000
 
 // template engine
-// handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
@@ -17,7 +16,40 @@ app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
 })
 
-// start and listen on the express server
-app.listen(port, () => {
-  console.log(`Express is listening on localhost: ${port}`)
+app.get('/restaurants/:id', (req, res) => {
+  const selectedRestaurant = restaurantList.results.find(
+    (restaurant) => restaurant.id.toString() === req.params.id
+  )
+  res.render('show', { restaurant: selectedRestaurant })
 })
+
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  const keywordArr = keyword.trim().toLowerCase().split(' ')
+  const searchResults = []
+  let showErrorMsg = false
+
+  // compare search keywords
+  for (restaurant of restaurantList.results) {
+    const { name, name_en, category, location } = restaurant 
+    const infoArr = [name, name_en, category, location]
+
+    for (word of keywordArr) {
+      if (
+        infoArr.some((info) => info.toLowerCase().includes(word)) &&
+        !searchResults.includes(restaurant)
+      ) {
+        searchResults.push(restaurant)
+      }
+    }
+  }
+  // notify result not found
+  if (searchResults.length === 0) {
+    showErrorMsg = true
+  }
+  // render page
+  res.render('index', { restaurants: searchResults, keyword, showErrorMsg })
+})
+
+// start and listen on the Express server
+app.listen(port, () => console.log(`Express is listening on localhost:${port}`))
