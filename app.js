@@ -29,9 +29,8 @@ app.get('/search', (req, res) => {
   const searchResults = []
   let showErrorMsg = false
 
-  // compare search keywords
   for (restaurant of restaurantList.results) {
-    const { name, name_en, category, location } = restaurant 
+    const { name, name_en, category, location } = restaurant
     const infoArr = [name, name_en, category, location]
 
     for (word of keywordArr) {
@@ -43,7 +42,7 @@ app.get('/search', (req, res) => {
       }
     }
   }
-  // notify result not found
+
   if (searchResults.length === 0) {
     showErrorMsg = true
   }
